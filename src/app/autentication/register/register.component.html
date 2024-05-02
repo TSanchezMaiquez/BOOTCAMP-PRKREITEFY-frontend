@@ -1,0 +1,37 @@
+<div class="container">
+
+
+  <form>
+    <h2>Register</h2>
+    <p>
+      <i class="bi bi-person-fill"></i>
+      <input type="text" [(ngModel)]="user.nombreDeUsuario" name="nombreDeUsuario" placeholder="Nombre de usuario" required>
+    </p>
+   <p>
+    <i class="bi bi-lock"></i>
+    <input type="password" [(ngModel)]="user.password" name="password" placeholder="Contraseña" required>
+   </p>
+   <p>    
+    <i class="bi bi-person"></i>
+     <input type="text" [(ngModel)]="user.apellidos" name="apellidos" placeholder="Apellidos" required>
+   </p>
+   <p>
+    <i class="bi bi-envelope-fill"></i>
+    <input type="email" [(ngModel)]="user.email" name="email" placeholder="Email" required>
+   </p>
+
+   <div class="input-group mb-3">
+    <i class="bi bi-three-dots-vertical"></i>
+
+    <label class="input-group-text" for="inputGroupSelect01">Rol de usuario</label>
+    <select class="form-select" id="inputGroupSelect01" [(ngModel)]="user.role" name="role" required>
+      <option value="USER">USER</option>
+      <option value="ADMIN">ADMIN</option>
+    </select>
+  </div>
+ 
+    <button class="registrar" (click)="register()">registrarse</button>
+  </form>
+</div>
+
+

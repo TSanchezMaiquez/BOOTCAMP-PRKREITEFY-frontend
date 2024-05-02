@@ -1,0 +1,25 @@
+
+<div class="container">
+
+
+  <form>
+    <h2>Login</h2>
+    <p>
+      <i class="bi bi-person-fill"></i>
+      <input type="text" [(ngModel)]="credentials.username" name="username" placeholder="Nombre de usuario" required>
+    </p>
+    <p>
+      <i class="bi bi-lock"></i>
+      <input type="password" [(ngModel)]="credentials.password" name="password" placeholder="Contraseña" required>
+    </p>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <button class="login" (click)="login()">Login</button>
+    <div class="register-link">
+      <p>¿No tienes una cuenta? <a routerLink="/register">Regístrate</a></p>
+  </div>
+  </form>
+
+
