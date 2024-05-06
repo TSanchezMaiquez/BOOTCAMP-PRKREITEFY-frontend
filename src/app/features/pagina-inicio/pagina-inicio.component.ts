@@ -18,9 +18,11 @@ export class PaginaInicioComponent implements OnInit{
   username?: string;
   usuario?: Usuario;
 
+  estiloCancion?: string;
+
   page: number = 0;
   size: number = 5;
-  sort: string = 'artistaNombre,asc';
+  sort: string = 'id,asc';
 
   constructor(private router: Router, private cancionService: CancionService, private route: ActivatedRoute, private usuarioService: UsuarioService){}
 
@@ -45,12 +47,12 @@ export class PaginaInicioComponent implements OnInit{
     })
   }
 
-  private obtenerUltimasCancionesAnadidas(): void{
-    this.cancionService.obtenerUltimasCancionesAnadidas(this.page, this.size, this.sort).subscribe({
+  public obtenerUltimasCancionesAnadidas(): void{
+    const filtros: string | undefined = this.anadirFiltros();
+    const sort: string = 'artistaNombre,asc'; //fechaInsercion
+    this.cancionService.obtenerUltimasCancionesAnadidas(this.page, this.size, sort, filtros).subscribe({
       next: (data: any) => {
-        this.ultimasCancionesAnadidas = data.content;
-        console.log('Últimas canciones añadidas:', this.ultimasCancionesAnadidas);
-      },
+        this.ultimasCancionesAnadidas = data.content;},
       error: (error) => {this.handleError(error);}
       
     });
@@ -69,6 +71,20 @@ export class PaginaInicioComponent implements OnInit{
   public logout(): void{
     localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
+  }
+  private anadirFiltros(): string | undefined{
+
+    const filtros: string[] = [];
+
+    if (this.estiloCancion){
+      filtros.push("estilo:MATCH:"+ this.estiloCancion);
+    }
+    
+    if(filtros.length>0){
+      return filtros.join(',');
+    }else{
+      return undefined;
+    }
   }
 
   

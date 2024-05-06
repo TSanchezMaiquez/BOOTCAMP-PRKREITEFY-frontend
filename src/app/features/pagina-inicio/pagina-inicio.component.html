@@ -4,48 +4,39 @@
   <button type="button" class="btn btn-outline-secondary" (click)="logout()">Logout</button>
 </p>
 
+<form>
+  <div class="row buscador">
+    <h2>Filtrar por estilo</h2>
+    <div class="for-group">
+      <label class="estilo" for="name">Estilo</label>
+      <select class="form-select" id="inputGroupSelect01" [(ngModel)]="estiloCancion" name="role" required>
+        <option value="ROCK">ROCK</option>
+        <option value="POP">POP</option>
+        <option value="CLASICA">CLASICA</option>
+        <option value="">Quitar filtro</option>
+      </select>
+      <div class="buscar">
+        <button id="btnSearch" class="btn btn-secondary" (click)="obtenerUltimasCancionesAnadidas()" >Buscar</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+
+<h1>Novedades</h1>
 <div class="container" *ngIf="ultimasCancionesAnadidas.length > 0">
-  <h1>Novedades</h1>
+
   <div *ngFor="let cancion of ultimasCancionesAnadidas" class="cancion">
-    {{cancion.nombre}}
+ 
     <a >
       <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción" [routerLink]="['/cancion', cancion.id]">
     </a>
-  
+    <p class="nombreCancion">{{cancion.nombre}}</p>
+    <p class="nombreArtista">{{cancion.artistaNombre}}</p>
+ 
+ 
   </div>
 </div>
 
 
-<table aria-describedby="listDescription" *ngIf="ultimasCancionesAnadidas.length > 0" >
-    <thead>
-        <th>Id</th>
-        <th>nombre</th>
-        <th>duracion</th>
-        <th>estilo</th>
-        <th>valoracion</th>
-        <th>reproducciones</th>
-        <th>fechaInsercion</th>
-        <th>albumTitulo</th>
-        <th>artistaNombre</th>
-        <th>albumImagen</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cancion of ultimasCancionesAnadidas">
-        <td>{{ cancion.id }}</td>
-        
-        <td>{{ cancion.nombre }}</td>
-        <td>{{ cancion.duracion }}</td>
-        <td>{{ cancion.estilo }}</td>
-        <td>{{ cancion.valoracion }}</td>
-        <td>{{ cancion.reproducciones }}</td>
-        <td>{{ cancion.fechaInsercion }}</td>
-        <td>{{ cancion.albumTitulo }}</td>
-        <td>{{ cancion.artistaNombre }}</td>
-        <td>
-          <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción">
-          </td>
-      
-      </tr>
-    </tbody>
-  </table>
-  

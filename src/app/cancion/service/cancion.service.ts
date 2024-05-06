@@ -21,11 +21,14 @@ export class CancionService{
   }
 
 
-  public obtenerUltimasCancionesAnadidas(page: number, size: number, sort: string): Observable<Cancion[]> {
+  public obtenerUltimasCancionesAnadidas(page: number, size: number, sort: string, filters?: string): Observable<Cancion[]> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
     });
     let urlEndpoint =`${this.baseUrl}/canciones?page=` + page + '&size=' + size + '&sort=' + sort;
+    if(filters){
+      urlEndpoint = urlEndpoint + "&filter=" + filters;
+    }
     return this.http.get<Cancion[]>(urlEndpoint, { headers: headers });
   }
 
