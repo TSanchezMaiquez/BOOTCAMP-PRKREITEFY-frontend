@@ -9,6 +9,7 @@ import { LoginComponent } from './autentication/login/login.component';
 import { RegisterComponent } from './autentication/register/register.component';
 import { PaginaInicioComponent } from './features/pagina-inicio/pagina-inicio.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
+import { CancionFormComponent } from './cancion/cancion-form/cancion-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
     LoginComponent,
     RegisterComponent,
     PaginaInicioComponent,
-    NavbarComponent
+    NavbarComponent,
+    CancionFormComponent
   ],
   imports: [
     BrowserModule,

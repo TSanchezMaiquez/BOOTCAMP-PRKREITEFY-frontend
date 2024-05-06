@@ -9,6 +9,8 @@
 
 form {
     padding: 70px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +25,7 @@ form {
 }
 
 button {
-    align-self: flex-end;
+    align-self: flex-center;
 }
 
 
@@ -77,10 +79,22 @@ label{
 }
 .registrar {
     background-color: rgb(104, 237, 192);
-    padding: 2 6px;
+    padding: 3px 6px;
     border: 2px solid rgb(98, 176, 151);
-    color: rgb(77, 76, 76);
+    color: rgb(0, 0, 0);
     font-weight: bold;
     border-radius: 5px;
     margin-top: 10px;
+}
+.cancelar{
+    align-self: flex-center;
+    margin-right: 10px;
+    background-color: rgb(249, 195, 186);
+    padding: 2 6px;
+    border: 2px solid rgb(231, 119, 88);
+    color: rgb(16, 16, 16);
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 3px;
+
 }

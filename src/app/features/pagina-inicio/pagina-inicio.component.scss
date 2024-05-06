@@ -1,0 +1,35 @@
+img {
+    height: 100px;
+}
+.datosUsuario{
+    background-color: black;
+    color: white;
+    margin: 0px;
+    text-align: end;
+    padding: 8px;
+    display: flex; 
+    align-items: center;
+    justify-content: flex-end; 
+  
+}
+.label{
+    color: rgb(180, 180, 180);
+    margin-right: 3px;
+}
+i {
+    color: rgb(76, 99, 227);
+    font-size: 8px;
+    margin-left: 15px;
+    margin-right: 3px;
+}
+p {
+    padding: 8px;
+  
+}
+.btn-outline-secondary{
+    margin-left: 15px;
+    background-color: rgb(208, 120, 114);
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+}

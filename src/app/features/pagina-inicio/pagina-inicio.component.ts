@@ -1,10 +1,78 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Usuario } from 'src/app/entities/usuario/model/usuario.model';
+import { ActivatedRoute } from '@angular/router';
+import { UsuarioService } from 'src/app/entities/usuario/service/usuario.service';
+import { Cancion } from 'src/app/cancion/model/cancion.model';
+import { CancionService } from 'src/app/cancion/service/cancion.service';
 
 @Component({
   selector: 'app-pagina-inicio',
   templateUrl: './pagina-inicio.component.html',
   styleUrls: ['./pagina-inicio.component.scss']
 })
-export class PaginaInicioComponent {
+export class PaginaInicioComponent implements OnInit{
+  canciones: Cancion[] = [];
+  ultimasCancionesAnadidas: Cancion[] = [];
+  username?: string;
+  usuario?: Usuario;
 
+  page: number = 0;
+  size: number = 5;
+  sort: string = 'artistaNombre,asc';
+
+  constructor(private router: Router, private cancionService: CancionService, private route: ActivatedRoute, private usuarioService: UsuarioService){}
+
+
+  ngOnInit(): void {
+    this.obtenerUltimasCancionesAnadidas();
+    const username = this.route.snapshot.paramMap.get('username');
+    if (username) {
+      this.username = username;
+    }
+    this.obtenerUsuario();
+   
+  }
+  private obtenerCanciones(): void {
+   
+    this.cancionService.obtenerCanciones().subscribe({
+      
+      next: (canciones: any) => {this.canciones = canciones.content;
+    
+      },
+      error: (err) => {this.handleError(err);}
+    })
+  }
+
+  private obtenerUltimasCancionesAnadidas(): void{
+    this.cancionService.obtenerUltimasCancionesAnadidas(this.page, this.size, this.sort).subscribe({
+      next: (data: any) => {
+        this.ultimasCancionesAnadidas = data.content;
+        console.log('Últimas canciones añadidas:', this.ultimasCancionesAnadidas);
+      },
+      error: (error) => {this.handleError(error);}
+      
+    });
+  }
+
+  private obtenerUsuario(): void {
+   
+    this.usuarioService.obtenerUsuario(this.username!).subscribe({
+      
+      next: (usuario) => {this.usuario = usuario},
+      error: (err) => {this.handleError(err);}
+    })
+    
+  }
+
+  public logout(): void{
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/login']);
+  }
+
+  
+  private handleError(err: any){
+    console.log(err);
+  }
 }

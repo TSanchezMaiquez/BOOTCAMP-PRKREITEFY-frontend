@@ -1,1 +1,51 @@
-<p>pagina-inicio works!</p>
+<p class="datosUsuario">
+  <i class="bi bi-circle-fill"></i> <span class="label">Nombre de usuario:</span> {{usuario?.nombreDeUsuario}}
+  <i class="bi bi-circle-fill"></i> <span class="label">Apellidos:</span> {{usuario?.apellidos}}
+  <button type="button" class="btn btn-outline-secondary" (click)="logout()">Logout</button>
+</p>
+
+<div class="container" *ngIf="ultimasCancionesAnadidas.length > 0">
+  <h1>Novedades</h1>
+  <div *ngFor="let cancion of ultimasCancionesAnadidas" class="cancion">
+    {{cancion.nombre}}
+    <a >
+      <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción" [routerLink]="['/cancion', cancion.id]">
+    </a>
+  
+  </div>
+</div>
+
+
+<table aria-describedby="listDescription" *ngIf="ultimasCancionesAnadidas.length > 0" >
+    <thead>
+        <th>Id</th>
+        <th>nombre</th>
+        <th>duracion</th>
+        <th>estilo</th>
+        <th>valoracion</th>
+        <th>reproducciones</th>
+        <th>fechaInsercion</th>
+        <th>albumTitulo</th>
+        <th>artistaNombre</th>
+        <th>albumImagen</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cancion of ultimasCancionesAnadidas">
+        <td>{{ cancion.id }}</td>
+        
+        <td>{{ cancion.nombre }}</td>
+        <td>{{ cancion.duracion }}</td>
+        <td>{{ cancion.estilo }}</td>
+        <td>{{ cancion.valoracion }}</td>
+        <td>{{ cancion.reproducciones }}</td>
+        <td>{{ cancion.fechaInsercion }}</td>
+        <td>{{ cancion.albumTitulo }}</td>
+        <td>{{ cancion.artistaNombre }}</td>
+        <td>
+          <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción">
+          </td>
+      
+      </tr>
+    </tbody>
+  </table>
+  

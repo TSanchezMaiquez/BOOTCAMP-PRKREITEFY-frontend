@@ -14,16 +14,16 @@ export class RegisterComponent {
   constructor(private authService: AuthService,
     private router: Router) { }
 
-register(): void {
-console.log("registro: ", this.user);
-this.authService.register(this.user).subscribe({
-next: (response) => {
-this.authService.saveToken(response.token);
-this.router.navigate(['/inicio']);
-},
-error: (error) => {
-console.error('There was an error!', error);
-}
-});
-}
+  register(): void {
+  console.log("registro: ", this.user);
+    this.authService.register(this.user).subscribe({
+      next: (response) => {
+        this.authService.saveToken(response.token);
+        this.router.navigate(['/inicio', this.user.nombreDeUsuario]);
+      },
+      error: (error) => {
+        console.error('There was an error!', error);
+      }
+    });
+  }
 }

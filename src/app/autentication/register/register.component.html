@@ -21,16 +21,18 @@
    </p>
 
    <div class="input-group mb-3">
-    <i class="bi bi-three-dots-vertical"></i>
+      <i class="bi bi-three-dots-vertical"></i>
+      <label class="input-group-text" for="inputGroupSelect01">Rol de usuario</label>
+      <select class="form-select" id="inputGroupSelect01" [(ngModel)]="user.role" name="role" required>
+        <option value="USER">USER</option>
+        <option value="ADMIN">ADMIN</option>
+      </select>
+    </div>
+    <div>
+      <button type="button" class="btn btn-secondary cancelar" data-bs-dismiss="modal" [routerLink]="['/login']">Cancelar</button>
+      <button class="registrar" (click)="register()">registrarse</button>
+    </div>
 
-    <label class="input-group-text" for="inputGroupSelect01">Rol de usuario</label>
-    <select class="form-select" id="inputGroupSelect01" [(ngModel)]="user.role" name="role" required>
-      <option value="USER">USER</option>
-      <option value="ADMIN">ADMIN</option>
-    </select>
-  </div>
- 
-    <button class="registrar" (click)="register()">registrarse</button>
   </form>
 </div>
 
