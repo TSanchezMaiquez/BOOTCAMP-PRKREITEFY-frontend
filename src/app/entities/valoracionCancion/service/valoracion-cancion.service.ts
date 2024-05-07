@@ -16,9 +16,13 @@ export class ValoracionCancionService {
   constructor(private http: HttpClient) { }
 
 
-  anadirValoracionACancion(username: string, valoracionCancionDto: ValoracionCancion): Observable<ValoracionCancion[]> {
+  public anadirValoracionACancion(username: string, valoracionCancionDto: ValoracionCancion): Observable<ValoracionCancion[]> {
     let urlEndpoint: string = `${this.baseUrl}/usuarios/${username}/canciones`;
-    return this.http.patch<ValoracionCancion[]>(urlEndpoint, valoracionCancionDto, { headers: this.headers });
+    return this.http.put<ValoracionCancion[]>(urlEndpoint, valoracionCancionDto, { headers: this.headers });
   }
   
+  public obtenerValoraciones(username:string): Observable<ValoracionCancion[]> {
+    let urlEndpoint: string = `${this.baseUrl}/usuarios/${username}/canciones`;
+    return this.http.get<ValoracionCancion[]>(urlEndpoint, { headers: this.headers });
+  }
 }

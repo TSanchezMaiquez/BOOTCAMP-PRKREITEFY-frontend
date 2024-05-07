@@ -12,12 +12,17 @@
             <h4>{{cancion?.albumTitulo}}</h4>
             <label>Estilo</label> <span>{{cancion?.estilo}} </span> ,  
                 <label>Duración</label> <span>{{cancion?.duracion}} </span> ,
-                <label>Reproducciones Totales</label> <span> {{cancion?.reproducciones}} </span> 
+              
         </div>
     </div>
     <div class="valoraciones">valoraciones Totales: <span>{{cancion?.valoracion}}</span> 
         <label >Valorar</label> <i class="bi bi-star-fill estrella1" (click)="valorar(1)" > </i> <i class="bi bi-star-fill estrella2" (click)="valorar(2)" > </i> <i class="bi bi-star-fill estrella3" (click)="valorar(3)" > </i> <i class="bi bi-star-fill estrella4" (click)="valorar(4)" > </i>
-        <label >Tu valoracion: </label> <span> {{valoracionCancion[0]}}</span>
+        <label >Tu valoracion: </label> <span> {{valoracion}}</span>
+       
     </div>
- 
+    <div class="reproducciones">
+        <label>Reproducciones Totales</label> <span> {{cancion?.reproducciones}} </span> 
+        <button type="button" class="btn btn-success"><i class="bi bi-play"></i></button>
+        <label>Tus reproducciones: </label> <span> ToDo</span> 
+    </div>
 </div>

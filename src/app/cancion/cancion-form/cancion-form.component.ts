@@ -15,11 +15,12 @@ export class CancionFormComponent {
   cancionId?: number;
   cancion?: Cancion;
   username?: string;
-  valoracionCancion: ValoracionCancion[] = [];
+  valoracionesCanciones: ValoracionCancion[] = [];
+  valoracion?: number;
   
  
 
-  constructor(private route: ActivatedRoute, private cancionService: CancionService, private ValoracionCancionService: ValoracionCancionService){}
+  constructor(private route: ActivatedRoute, private cancionService: CancionService, private valoracionCancionService: ValoracionCancionService){}
 
 
 
@@ -33,7 +34,8 @@ export class CancionFormComponent {
     const username = this.route.snapshot.paramMap.get('username');
     if (username) {
       this.username = username;
-      console.log(username);
+      this.obtenerValoraciones();
+ 
     }  
   }
   private obtenerCancionPorId():void{
@@ -45,14 +47,35 @@ export class CancionFormComponent {
   }
   public valorar(valoracion: number): void {
     const valoracionCancion= new ValoracionCancion(this.username!, this.cancionId!, this.cancion?.nombre!,valoracion);
-   this.ValoracionCancionService.anadirValoracionACancion(this.username!, valoracionCancion).subscribe({
-    next: (valoracionCancion) => {this.valoracionCancion = valoracionCancion
+   this.valoracionCancionService.anadirValoracionACancion(this.username!, valoracionCancion).subscribe({
+    next: (valoracionCancion) => {this.valoracionesCanciones = valoracionCancion
       console.log(valoracionCancion)
     },
     error: (error) => {this.handleError(error);}
    })
   }
-
+  private obtenerValoraciones(): void{
+    this.valoracionCancionService.obtenerValoraciones(this.username!).subscribe({
+      next: (valoracionCancion) => {this.valoracionesCanciones = valoracionCancion
+        console.log("Holaaaaaa"+this.valoracionesCanciones.length)
+        this.valoracionDeCancionSeleccionada();
+      },
+      error: (error) => {this.handleError(error);}
+    })
+  }
+  private valoracionDeCancionSeleccionada(){
+    console.log("dentro");
+    if(this.valoracionesCanciones.length>0){
+      console.log("dentro del if")
+      for (let i = 0; i < this.valoracionesCanciones.length; i++) {
+        const valoracionCancion = this.valoracionesCanciones[i];
+        if (valoracionCancion.usuarioId === this.username && valoracionCancion.cancionId === this.cancionId) {
+            this.valoracion = valoracionCancion.valoracion;
+            break; 
+        }
+    }
+    }
+  }
   private handleError(err: any):void{
     console.log(err);
   }
