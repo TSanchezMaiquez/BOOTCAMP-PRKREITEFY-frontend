@@ -40,16 +40,14 @@ export class PaginaInicioComponent implements OnInit{
    
     this.cancionService.obtenerCanciones().subscribe({
       
-      next: (canciones: any) => {this.canciones = canciones.content;
-    
-      },
+      next: (canciones: any) => {this.canciones = canciones.content; },
       error: (err) => {this.handleError(err);}
     })
   }
 
   public obtenerUltimasCancionesAnadidas(): void{
     const filtros: string | undefined = this.anadirFiltros();
-    const sort: string = 'artistaNombre,asc'; //fechaInsercion
+    const sort: string = 'fechaInsercion,desc';
     this.cancionService.obtenerUltimasCancionesAnadidas(this.page, this.size, sort, filtros).subscribe({
       next: (data: any) => {
         this.ultimasCancionesAnadidas = data.content;},

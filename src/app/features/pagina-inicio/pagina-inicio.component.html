@@ -30,7 +30,7 @@
   <div *ngFor="let cancion of ultimasCancionesAnadidas" class="cancion">
  
     <a >
-      <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción" [routerLink]="['/cancion', cancion.id]">
+      <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción" [routerLink]="['/cancion', cancion.id, username]">
     </a>
     <p class="nombreCancion">{{cancion.nombre}}</p>
     <p class="nombreArtista">{{cancion.artistaNombre}}</p>

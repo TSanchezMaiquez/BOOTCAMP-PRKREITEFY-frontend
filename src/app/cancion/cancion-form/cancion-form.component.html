@@ -1,2 +1,23 @@
-<p>cancion-form works!</p>
-{{cancionId}}
+<div class="container">
+    <h1 class="tituloCancion"> {{cancion?.nombre}}</h1>
+    <div class="infoEnColumnas">
+        <div class="imagen">
+            <a >
+                <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion?.albumImagen" alt="Nombre de la canción">
+            </a>
+        </div>
+        <div class="informacion">
+            <h3>{{cancion?.artistaNombre}}</h3>
+           
+            <h4>{{cancion?.albumTitulo}}</h4>
+            <label>Estilo</label> <span>{{cancion?.estilo}} </span> ,  
+                <label>Duración</label> <span>{{cancion?.duracion}} </span> ,
+                <label>Reproducciones Totales</label> <span> {{cancion?.reproducciones}} </span> 
+        </div>
+    </div>
+    <div class="valoraciones">valoraciones Totales: <span>{{cancion?.valoracion}}</span> 
+        <label >Valorar</label> <i class="bi bi-star-fill estrella1" (click)="valorar(1)" > </i> <i class="bi bi-star-fill estrella2" (click)="valorar(2)" > </i> <i class="bi bi-star-fill estrella3" (click)="valorar(3)" > </i> <i class="bi bi-star-fill estrella4" (click)="valorar(4)" > </i>
+        <label >Tu valoracion: </label> <span> {{valoracionCancion[0]}}</span>
+    </div>
+ 
+</div>

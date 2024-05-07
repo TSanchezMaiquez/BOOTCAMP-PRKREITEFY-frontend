@@ -1,0 +1,19 @@
+.container{
+    padding: 10px;
+}
+img{
+    height: 240px;
+    margin-right: 10px;
+    border-radius: 8px; 
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.7);
+}
+.infoEnColumnas{
+    display: flex;
+    flex-direction: row; 
+}
+.estrella1:hover,
+.estrella2:hover,
+.estrella3:hover,
+.estrella4:hover {
+    color: gold; /* Cambia el color al que desees cuando el ratón está encima */
+}
