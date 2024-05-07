@@ -43,7 +43,7 @@ export class CancionFormComponent {
     if (username) {
       this.username = username;
       this.obtenerValoraciones();
-      this.obtenerReproducciones()
+      this.obtenerReproducciones();
  
     }  
   }
@@ -66,7 +66,7 @@ export class CancionFormComponent {
   }
   public reproducir(): void {
 
-    const reproduccionCancion= new ReproduccionCancion(this.username!, this.cancionId!, this.cancion?.nombre!,(this.reproducciones!+1),new Date() );
+    const reproduccionCancion= new ReproduccionCancion(this.username!, this.cancionId!, this.cancion?.nombre!,(this.reproducciones+1),new Date() );
    this.reproduccionCancionservice.anadirReproduccionACancion(this.username!, reproduccionCancion).subscribe({
     next: (reproduccionCancion) => {this.reproduccionesCanciones = reproduccionCancion
      this.obtenerReproducciones();
@@ -98,19 +98,21 @@ export class CancionFormComponent {
     this.reproduccionCancionservice.obtenerReproducciones(this.username!).subscribe({
       next: (reproduccionCancion) => {this.reproduccionesCanciones = reproduccionCancion
        this.reproduccionesDeCancionSeleccionada();
+       
       },
       error: (error) => {this.handleError(error);}
     })
   }
   private reproduccionesDeCancionSeleccionada(){
+    let reproduccionesDeCancion=0;
     if(this.reproduccionesCanciones.length>0){
       for (let i = 0; i < this.reproduccionesCanciones.length; i++) {
         const reproduccionCancion = this.reproduccionesCanciones[i];
         if (reproduccionCancion.usuarioId === this.username && reproduccionCancion.cancionId === this.cancionId) {
-          this.reproducciones++;
-            break; 
+         reproduccionesDeCancion++;
         }
     }
+    this.reproducciones = reproduccionesDeCancion;
     }
   }
   private handleError(err: any):void{
