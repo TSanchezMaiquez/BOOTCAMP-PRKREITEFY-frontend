@@ -22,7 +22,7 @@ export class PaginaInicioComponent implements OnInit{
 
   page: number = 0;
   size: number = 5;
-  sort: string = 'id,asc';
+  sort: string = 'fechaInsercion,asc';
 
   constructor(private router: Router, private cancionService: CancionService, private route: ActivatedRoute, private usuarioService: UsuarioService){}
 

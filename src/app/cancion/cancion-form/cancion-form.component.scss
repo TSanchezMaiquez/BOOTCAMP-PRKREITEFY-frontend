@@ -1,19 +1,76 @@
 .container{
-    padding: 10px;
+ padding: 30px;
+
 }
 img{
-    height: 240px;
-    margin-right: 10px;
+    height: 300px;
+    margin: 15px;
     border-radius: 8px; 
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.7);
+    border: 2px solid black;
+
 }
 .infoEnColumnas{
     display: flex;
     flex-direction: row; 
+    flex-wrap: wrap;
+    background-color: black;
 }
 .estrella1:hover,
 .estrella2:hover,
 .estrella3:hover,
 .estrella4:hover {
-    color: gold; /* Cambia el color al que desees cuando el ratón está encima */
+    color: gold; 
+}
+i{
+    color: white;
+}
+.tituloCancion{
+    font-family: "Poetsen One", sans-serif;
+    color: rgb(31, 122, 122);
+    margin-bottom: 5px;
+}
+h3{
+    font-family: "Poetsen One", sans-serif;
+    font-size: 18px;
+    color: rgb(54, 153, 153);
+    margin: 0px;
+}
+h4{
+    font-family: "Poetsen One", sans-serif;
+    font-size: 15px;
+    color: rgb(81, 168, 168);
+    margin-top: 2px;
+    margin-left: 8px;
+}
+label{
+   
+    color: rgb(214, 212, 212);
+}
+span{
+    margin-right: 10px;
+    color: white;
+}
+.infoCancion{
+    margin-bottom: 5px;
+}
+.informacion{
+    margin-left: 10px;
+    padding: 10px;
+    padding-top: 30px;
+}
+.valoraciones {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.estrella1{
+    margin-left: 5px;
+}
+button{
+    margin-top: 6px;
+    border-radius: 50%;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background-color: rgb(112, 189, 189);
+    border: 2px solid rgb(54, 153, 153);
 }
