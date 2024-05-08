@@ -18,4 +18,12 @@ export class UsuarioService {
 
     return this.http.get<Usuario>(`${this.baseUrl}/usuarios/`+ nombreDeUsuario, { headers: headers });
   }
+
+  public actualizarUsuario(usuario: Usuario): Observable<Usuario>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+    });
+    return this.http.patch<Usuario>(`${this.baseUrl}/usuarios/`+ usuario.nombreDeUsuario, usuario, { headers: headers });
+
+  }
 }

@@ -17,15 +17,15 @@ export class CancionService{
   constructor(private http: HttpClient, private authService: AuthService) { }
 
  
-  obtenerCanciones(): Observable<Cancion[]> {
-    // const token = this.authService.getToken();
-    // const headers = new HttpHeaders({
-    //   'Authorization': `Bearer`+token});
-    return this.http.get<Cancion[]>(`${this.baseUrl}/canciones`, { headers: this.headers });
-  }
+  // obtenerCanciones(): Observable<Cancion[]> {
+  //   // const token = this.authService.getToken();
+  //   // const headers = new HttpHeaders({
+  //   //   'Authorization': `Bearer`+token});
+  //   return this.http.get<Cancion[]>(`${this.baseUrl}/canciones`, { headers: this.headers });
+  // }
 
 
-  public obtenerUltimasCancionesAnadidas(page: number, size: number, sort: string, filters?: string): Observable<Cancion[]> {
+  public obtenerCanciones(page: number, size: number, sort: string, filters?: string): Observable<Cancion[]> {
  
     // const token = this.authService.getToken();
     // const headers = new HttpHeaders({

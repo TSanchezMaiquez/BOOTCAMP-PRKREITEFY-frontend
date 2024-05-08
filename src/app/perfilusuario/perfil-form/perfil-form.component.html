@@ -1,0 +1,48 @@
+
+<div class="container">
+    <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Datos de usuario</h5>
+            <table  *ngIf="usuario">
+              <tr>
+                <td><label>Nombre de usuario:</label></td>
+                <td><input type="text" class="username" placeholder="username" [value]="username" readonly></td>
+              </tr>
+              <tr>
+                <td><label>Apellidos:</label></td>
+                <td><input type="text" [(ngModel)]="usuario!.apellidos"></td>
+              </tr>
+              <tr>
+                <td><label>Email:</label></td>
+                <td><input type="text" [(ngModel)]="usuario!.email"></td>
+              </tr>
+              <tr>
+                <td><label>Contraseña:</label></td>
+                <td><input type="text" [(ngModel)]="password"></td>
+              </tr>
+              <tr>
+                <td><label>Repetir contraseña:</label></td>
+                <td><input type="text" [(ngModel)]="passwordRepetido"></td>
+              </tr>
+            </table>
+            <button [routerLink]="['/inicio', username]" > Cancelar</button>
+            <button (click)="modificar()" >Modificar</button>
+          </div>
+        </div>
+    </div>
+
+
+    
+    <div class="col-lg-4" >
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+  

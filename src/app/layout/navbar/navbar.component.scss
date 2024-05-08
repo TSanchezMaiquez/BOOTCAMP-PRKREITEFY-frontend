@@ -6,9 +6,10 @@
     margin-top: 10px;
     background-color: rgb(220, 220, 220);
     padding: 30px;
-    border-top: 18px solid rgb(0, 0, 0); 
-    border-bottom: 18px solid rgb(0, 0, 0); 
+    border: 18px solid rgb(0, 0, 0); 
     border-radius: 1500px;
+    border-radius: 0px;
+
 
 }
 
@@ -19,7 +20,8 @@ img {
 
 h2 {
     margin: 0;
-    font-family: "Dancing Script", cursive;
+    font-family: "Poetsen One", sans-serif;
+    font-size: 20px;
 }
 @media screen and (max-width: 768px) {
     .container {
