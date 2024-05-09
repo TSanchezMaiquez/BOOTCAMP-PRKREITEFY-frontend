@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CancionService } from '../service/cancion.service';
-import { Cancion } from '../model/cancion.model';
+import { CancionService } from '../../entities/cancion/service/cancion.service';
+import { Cancion } from '../../entities/cancion/model/cancion.model';
 import { ValoracionCancionService } from '../../entities/valoracionCancion/service/valoracion-cancion.service';
 import { ValoracionCancion } from '../../entities/valoracionCancion/model/valoracionCancion.model';
 import { ReproduccionCancion } from '../../entities/reproduccionCancion/model/reproduccionCancion.model';

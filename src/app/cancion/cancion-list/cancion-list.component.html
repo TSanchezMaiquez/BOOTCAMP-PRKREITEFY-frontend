@@ -1,0 +1,95 @@
+
+<form>
+
+    <div class="centrar">
+        <div>      
+        </div>
+        <div class="row buscador">        
+            <div class="table-responsive">
+                <h2 class="tituloBuscador">Buscador</h2>
+              <table class="table">
+                <tr>
+                  <td class="col-6 col-md-6">
+                    <div class="form-group">
+                      <label for="nombre">Título de la canción</label>
+                     
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" [(ngModel)]="nombre" name="nombre" class="form-control">
+                  </td>
+                  <td class="col-6 col-md-6">
+                    <div class="form-group">
+                      <label for="artistaNombre">Artista</label>
+                    
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" [(ngModel)]="artistaNombre" name="artistaNombre" class="form-control">
+                  </td>
+                </tr>
+                <tr> 
+                  <td class="col-6 col-md-6">
+                    <div class="form-group">
+                      <label for="albumTitulo">Álbum</label>
+                    
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" [(ngModel)]="albumTitulo" name="albumTitulo" class="form-control">
+                  </td>
+                  <td class="col-6 col-md-6">
+                    <div class="form-group">
+                      <label for="estilo">Estilo</label>
+                  
+                    </div>
+                  </td>
+                  <td>
+                    <select name="estilo" [(ngModel)]="estilo" name="estilo" class="form-control">
+                        <option value="" selected></option>
+                        <option value="ROCK">ROCK</option>
+                        <option value="POP">POP</option>
+                        <option value="CLASICA">CLÁSICA</option>
+                      </select>
+                  </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td > <button class="btn btn-secondary btnBuscador" (click)="busquedaPorFiltros()">Buscar</button></td>
+             
+                </tr>
+              </table>
+              <div class="buscar">
+               
+            </div>
+            </div>            
+          </div>       
+    </div>  
+  </form>
+<div class="centrar">
+    <h1>Novedades</h1>
+</div>
+
+<div class="centrar">
+
+    <div class="container" *ngIf="canciones.length > 0">
+    
+      <div *ngFor="let cancion of canciones" class="cancion">
+        <a >
+          <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción">
+        </a>
+        <p class="nombreCancion">{{cancion.nombre}}</p>
+        <p class="nombreArtista">{{cancion.artistaNombre}}</p>
+      </div>
+    </div>   
+</div>
+ <div class="centrar">
+    <div class="botoneraPaginacion">
+        <button [disabled]="first" class="btn btn-secondary btnAtras" (click)="navegarAnterior()">Anterior</button>
+        <span> Pagina {{page+1}} de {{totalPages}} - Elementos totales: {{totalElements}}</span>
+        <button [disabled]="last" class="btn btn-secondary btnSiguiente" (click)="navegarSiguiente()">Siguiente</button>
+    </div>
+ </div>

@@ -5,6 +5,7 @@ import { RegisterComponent } from './autentication/register/register.component';
 import { PaginaInicioComponent } from './features/pagina-inicio/pagina-inicio.component';
 import { CancionFormComponent } from './cancion/cancion-form/cancion-form.component';
 import { PerfilFormComponent } from './perfilusuario/perfil-form/perfil-form.component';
+import { CancionListComponent } from './cancion/cancion-list/cancion-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'inicio/:username', component: PaginaInicioComponent },
   { path: 'cancion/:idCancion/:username', component: CancionFormComponent },
-  { path: 'perfilUsuario/:username', component: PerfilFormComponent }
+  { path: 'perfilUsuario/:username', component: PerfilFormComponent },
+  { path: 'canciones', component: CancionListComponent }
 ];
 
 @NgModule({

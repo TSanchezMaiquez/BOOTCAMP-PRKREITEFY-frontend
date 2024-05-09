@@ -59,16 +59,12 @@
                     </tbody>
                 </table>
             </div>
-
-
-
-
             
             <div class="botoneraPaginacion">
                 <button [disabled]="first" class="btn btn-secondary btnAtras" (click)="navegarAnterior()">Anterior</button>
                 <span> Pagina {{page+1}} de {{totalPages}} - Elementos totales: {{totalElements}}</span>
                 <button [disabled]="last" class="btn btn-secondary btnSiguiente" (click)="navegarSiguiente()">Siguiente</button>
-              </div>
+            </div>
         </div>
     </div>
 </div>

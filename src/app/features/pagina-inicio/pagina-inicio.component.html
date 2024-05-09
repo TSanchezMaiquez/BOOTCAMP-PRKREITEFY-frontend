@@ -26,7 +26,7 @@
 
 <h1>Novedades</h1>
 <div class="container" >
-  <a class="enlaceTodasLasCanciones" href="">Ver todas las canciones</a>
+  <a class="enlaceTodasLasCanciones" [routerLink]="['/canciones']" >Ver todas las canciones</a>
 </div>
 
 <div class="container" *ngIf="ultimasCancionesAnadidas.length > 0">
@@ -38,8 +38,6 @@
     </a>
     <p class="nombreCancion">{{cancion.nombre}}</p>
     <p class="nombreArtista">{{cancion.artistaNombre}}</p>
- 
- 
   </div>
 </div>
 

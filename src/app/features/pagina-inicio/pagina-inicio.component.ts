@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/entities/usuario/model/usuario.model';
 import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from 'src/app/entities/usuario/service/usuario.service';
-import { Cancion } from 'src/app/cancion/model/cancion.model';
-import { CancionService } from 'src/app/cancion/service/cancion.service';
+import { Cancion } from 'src/app/entities/cancion/model/cancion.model';
+import { CancionService } from 'src/app/entities/cancion/service/cancion.service';
 import { ReproduccionCancionService } from 'src/app/entities/reproduccionCancion/service/reproduccion-cancion.service';
 import { ReproduccionCancion } from 'src/app/entities/reproduccionCancion/model/reproduccionCancion.model';
-import { EstiloCancion } from '../../cancion/model/estiloCancion.model';
+import { EstiloCancion } from '../../entities/cancion/model/estiloCancion.model';
 import { LoginComponent } from '../../autentication/login/login.component';
 
 @Component({

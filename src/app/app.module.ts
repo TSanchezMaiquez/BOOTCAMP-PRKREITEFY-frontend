@@ -12,6 +12,7 @@ import { PaginaInicioComponent } from './features/pagina-inicio/pagina-inicio.co
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { CancionFormComponent } from './cancion/cancion-form/cancion-form.component';
 import { PerfilFormComponent } from './perfilusuario/perfil-form/perfil-form.component';
+import { CancionListComponent } from './cancion/cancion-list/cancion-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PerfilFormComponent } from './perfilusuario/perfil-form/perfil-form.com
     PaginaInicioComponent,
     NavbarComponent,
     CancionFormComponent,
-    PerfilFormComponent
+    PerfilFormComponent,
+    CancionListComponent
   ],
   imports: [
     BrowserModule,
