@@ -60,4 +60,13 @@
   </div>
 </div>
 
-
+<h1>Mas escuchadas</h1>
+<div class="paraTi" *ngIf="cancionesMasEscuchadas.length > 0">
+  <div *ngFor="let cancion of cancionesMasEscuchadas" class="cancion">
+    <a>
+      <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción" [routerLink]="['/cancion', cancion.id, username]">
+    </a>
+    <p class="nombreCancion">{{cancion.nombre}}</p>
+    <p class="nombreArtista">{{cancion.artistaNombre}}</p>
+  </div>
+</div>

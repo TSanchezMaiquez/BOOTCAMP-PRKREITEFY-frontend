@@ -65,10 +65,12 @@ export class CancionFormComponent {
    })
   }
   public reproducir(): void {
-
     const reproduccionCancion= new ReproduccionCancion(this.username!, this.cancionId!, this.cancion?.nombre!,(this.reproducciones+1),new Date(), this.cancion?.estilo! );
-   this.reproduccionCancionservice.anadirReproduccionACancion(this.username!, reproduccionCancion).subscribe({
+    console.log("holaaaaa1")
+   
+    this.reproduccionCancionservice.anadirReproduccionACancion(this.username!, reproduccionCancion).subscribe({
     next: (reproduccionCancion) => {this.reproduccionesCanciones = reproduccionCancion
+      console.log("holaaaaa")
      this.obtenerReproducciones();
     },
     error: (error) => {this.handleError(error);}

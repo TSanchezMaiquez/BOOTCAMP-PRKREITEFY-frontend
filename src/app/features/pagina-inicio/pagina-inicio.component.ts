@@ -8,8 +8,7 @@ import { Cancion } from 'src/app/entities/cancion/model/cancion.model';
 import { CancionService } from 'src/app/entities/cancion/service/cancion.service';
 import { ReproduccionCancionService } from 'src/app/entities/reproduccionCancion/service/reproduccion-cancion.service';
 import { ReproduccionCancion } from 'src/app/entities/reproduccionCancion/model/reproduccionCancion.model';
-import { EstiloCancion } from '../../entities/cancion/model/estiloCancion.model';
-import { LoginComponent } from '../../autentication/login/login.component';
+
 
 @Component({
   selector: 'app-pagina-inicio',
@@ -24,6 +23,7 @@ export class PaginaInicioComponent implements OnInit{
   cancionesReproducidas: ReproduccionCancion[] = [];
   cancionesDelPrimerEstilo: Cancion[] = [];
   cancionesDelSegundoEstilo: Cancion[] = [];
+  cancionesMasEscuchadas: Cancion[] =[];
  
 
   estiloCancion?: string;
@@ -45,29 +45,9 @@ export class PaginaInicioComponent implements OnInit{
       this.username = username;
     }
     this.obtenerUsuario();
-    this.obtenerReproducciones();
+   this.obtenerReproducciones();
    
   }
-  // private obtenerCanciones(): void {
-   
-  //   this.cancionService.obtenerCanciones().subscribe({
-      
-  //     next: (canciones: any) => {this.canciones = canciones.content; },
-  //     error: (err) => {this.handleError(err);}
-  //   })
-  // }
-
-  public obtenerUltimasCancionesAnadidas(): void{
-    const filtros: string | undefined = this.anadirFiltros();
-    const sort: string = 'fechaInsercion,desc';
-    this.cancionService.obtenerCanciones(this.page, this.size, sort, filtros).subscribe({
-      next: (data: any) => {
-        this.ultimasCancionesAnadidas = data.content;},
-      error: (error) => {this.handleError(error);}
-      
-    });
-  }
-
   private obtenerUsuario(): void {
    
     this.usuarioService.obtenerUsuario(this.username!).subscribe({
@@ -77,25 +57,46 @@ export class PaginaInicioComponent implements OnInit{
     })
     
   }
-
   public logout(): void{
     localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
-  private anadirFiltros(): string | undefined{
 
-    const filtros: string[] = [];
 
-    if (this.estiloCancion){
-      filtros.push("estilo:MATCH:"+ this.estiloCancion);
+
+//Seccion novedades
+  public obtenerUltimasCancionesAnadidas(): void{
+    let filtro: string = "";
+    if(this.estiloCancion){
+      filtro = "estilo:EQUAL:"+this.estiloCancion;
     }
-    
-    if(filtros.length>0){
-      return filtros.join(',');
-    }else{
-      return undefined;
-    }
+    const sort: string = 'fechaInsercion,desc';
+    this.cancionService.obtenerCanciones(this.page, this.size, sort, filtro).subscribe({
+      next: (data: any) => {
+        this.ultimasCancionesAnadidas = data.content;},
+      error: (error) => {this.handleError(error);}
+      
+    });
+    this.obtenerCancionesConMasReproducciones();
   }
+//Seccion más escuchadas
+  private obtenerCancionesConMasReproducciones():void {
+    const sort: string = 'reproducciones,desc';
+    const numeroDeCancionesARecuperar: number=5;
+    let filtro: string = "";
+    if(this.estiloCancion){
+       filtro = "estilo:EQUAL:"+this.estiloCancion;
+    }
+  
+    this.cancionService.obtenerCanciones(this.page, numeroDeCancionesARecuperar, sort, filtro).subscribe({
+      next: (data: any) => {this.cancionesMasEscuchadas = data.content; },
+      error: (error) => { this.handleError(error);}
+    });
+  
+  }
+ 
+
+  //Seccion para ti
   private obtenerReproducciones(): void{
     this.reproduccionCancionservice.obtenerReproducciones(this.username!).subscribe({
       next: (reproduccionCancion) => {this.cancionesReproducidas = reproduccionCancion 
@@ -104,22 +105,14 @@ export class PaginaInicioComponent implements OnInit{
       error: (error) => {this.handleError(error);}
     })
   }
-// private ordenarCancionesPorReproduccionDeUsuario(): void {
 
-//   if(this.cancionesReproducidas.length>0){
-//     this.cancionesReproducidas.sort((a, b) => b.reproducciones - a.reproducciones);
-//   }
-//   this.obtenerEstilosMasReproducidosPorUsuario()
-// }
 
 private obtenerEstilosMasReproducidosPorUsuario(): void{
 
-let rock:number = 0;
-let pop: number =0;
-let clasica: number = 0;
-
-
-
+  let rock:number = 0;
+  let pop: number =0;
+  let clasica: number = 0;
+ 
   for(let i=1; i <this.cancionesReproducidas.length; i++){
     if(this.cancionesReproducidas[i].estilo==="POP"){
       pop++;
@@ -128,7 +121,6 @@ let clasica: number = 0;
     }else{
       clasica++;
     }
-  
   }
   let estiloMenosEscuchado: string;
   let menorValor: number = Math.min(rock, pop, clasica);
@@ -159,7 +151,6 @@ private obtenerCancionesPorReproduccionTotalEstrellasYEstilo(estilos: string){
       this.handleError(error);
     }
   });
-
 
 }
 private filtroSeccionParaTi(estilo: string): string | undefined {
