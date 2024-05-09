@@ -11,7 +11,7 @@
             <div class="infoAutor">
                 <h3>{{cancion?.artistaNombre}}</h3>  
                 <h4>{{cancion?.albumTitulo}}</h4>
-                <label>Fecha insercion: </label> <span>{{cancion?.fechaInsercion}}</span>
+                <label>Fecha insercion: </label> <span>    <td>{{ cancion?.fechaInsercion| date: 'yyyy-MM-dd hh:mm:ss.SSS' }}</td></span>
             </div>
             <div class="infoCancion">
                 <label>Estilo: </label> <span>{{cancion?.estilo}} </span><br> 

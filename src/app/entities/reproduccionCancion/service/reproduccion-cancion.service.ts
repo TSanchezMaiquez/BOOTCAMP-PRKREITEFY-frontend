@@ -23,4 +23,16 @@ export class ReproduccionCancionService {
     let urlEndpoint: string = `${this.baseUrl}/usuarios/${username}/reproducciones`;
     return this.http.get<ReproduccionCancion[]>(urlEndpoint, { headers: this.headers });
   }
+  
+  
+
+  public obtenerReproduccionesPaginadas(page: number, size: number, sort: string, filters?: string): Observable<ReproduccionCancion[]> {
+ 
+
+    let urlEndpoint =`${this.baseUrl}/usuarios/reproducciones?page=` + page + '&size=' + size + '&sort=' + sort;
+    if(filters){
+      urlEndpoint = urlEndpoint + "&filter=" + filters;
+    }
+    return this.http.get<ReproduccionCancion[]>(urlEndpoint, { headers: this.headers });
+  }
 }

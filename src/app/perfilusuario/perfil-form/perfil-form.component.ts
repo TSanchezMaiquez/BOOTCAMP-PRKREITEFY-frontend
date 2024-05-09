@@ -24,6 +24,12 @@ export class PerfilFormComponent implements OnInit{
   password: string = "";
   passwordRepetido: string = "";
  
+  page: number = 0;
+  first: boolean = false;
+  last: boolean = false;
+  totalPages: number = 0;
+  totalElements: number = 0;
+
 
   constructor(private route: ActivatedRoute,
     private usuarioService: UsuarioService,
@@ -52,11 +58,21 @@ export class PerfilFormComponent implements OnInit{
     
   }
   private obtenerReproducciones(): void{
-    this.reproduccionCancionservice.obtenerReproducciones(this.username!).subscribe({
-      next: (reproduccionCancion) => {this.cancionesReproducidas = reproduccionCancion 
+
+    const size: number = 5;
+    const sort: string = 'id.fechaDeReproduccion,desc';
+    const filtro: string = "id.usuarioId:EQUAL:"+this.username! ;
+    this.reproduccionCancionservice.obtenerReproduccionesPaginadas(this.page, size, sort,filtro).subscribe({
+      next: (data:any) => {this.cancionesReproducidas = data.content;
+        this.first = data.first;
+        this.last = data.last;
+        this.totalPages = data.totalPages;
+        this.totalElements = data.totalElements;
+       console.log(this.cancionesReproducidas.length)
       },
       error: (error) => {this.handleError(error);}
     })
+  
   }
 public modificar():void{
   if(this.password && this.passwordRepetido && this.password !== this.passwordRepetido){
@@ -76,6 +92,16 @@ public modificar():void{
 
 }
 
+
+public navegarSiguiente():void{
+  this.page++;
+  this.obtenerReproducciones();
+}
+
+public navegarAnterior():void{
+  this.page--;
+  this.obtenerReproducciones();
+}
   private handleError(err: any){
     console.log(err);
   }

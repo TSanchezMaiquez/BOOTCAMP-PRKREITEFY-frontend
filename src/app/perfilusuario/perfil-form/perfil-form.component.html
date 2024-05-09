@@ -24,19 +24,51 @@
                         <td><label>Repetir contraseña:</label></td>
                         <td><input type="text" [(ngModel)]="passwordRepetido"></td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td class="botones" ><button class="cancelar" [routerLink]="['/inicio', username]">Cancelar</button>
+                            <span class="espacioEntreBotones"></span>
+                            <button class="modificar" (click)="modificar()" >Modificar</button>
+                        </td>
+                    
+                    </tr>
                 </table>
-                <button [routerLink]="['/inicio', username]">Cancelar</button>
-                <button (click)="modificar()" >Modificar</button>
+              
             </div>
         </div>
     </div>
 
     <div class="col-lg-4">
         <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+
+            <div class="table-responsive"*ngIf="cancionesReproducidas.length>0">
+                <table class="table">
+                    <thead class="titulos">
+                        <th>cancion</th>
+                        <th>fecha de Reproduccion</th>
+                        <th>Estilo</th>
+                    
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cancion of cancionesReproducidas">
+                            <td >{{ cancion.cancionNombre }}</td>
+                           <td>{{ cancion.fechaDeReproduccion | date: 'yyyy-MM-dd hh:mm:ss.SSS' }}</td>
+                            <td>{{cancion.estilo}}</td>
+                         </tr>
+                    </tbody>
+                </table>
             </div>
+
+
+
+
+            
+            <div class="botoneraPaginacion">
+                <button [disabled]="first" class="btn btn-secondary btnAtras" (click)="navegarAnterior()">Anterior</button>
+                <span> Pagina {{page+1}} de {{totalPages}} - Elementos totales: {{totalElements}}</span>
+                <button [disabled]="last" class="btn btn-secondary btnSiguiente" (click)="navegarSiguiente()">Siguiente</button>
+              </div>
         </div>
     </div>
 </div>

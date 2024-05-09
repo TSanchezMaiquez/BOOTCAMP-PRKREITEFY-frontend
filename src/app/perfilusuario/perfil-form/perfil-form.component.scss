@@ -3,19 +3,18 @@
     flex-wrap: wrap;
     flex-direction: row; 
     text-align: center;
-    justify-content: space-between;
+    justify-content: space-evenly;;
+    align-items: center; 
     color: white;
-    margin-left: 130px;
-    margin-right: 130px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 15px;
     
 }
 .card{
-    border: 5px solid rgb(100, 100, 100);
     background-color: black;
-    padding: 10px;
+    padding: 15px;
     text-align: start;
+    border-radius: 10px;
+
 }
 .username{
     background-color: rgb(208, 208, 207);
@@ -23,4 +22,57 @@
 input{
     margin-right: 5px;
     
+}
+.botones{
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.espacioEntreBotones{
+    margin-right: 10px;
+}
+.cancelar{
+    background-color: rgb(201, 123, 123);
+    color: white;
+}
+.modificar{
+    background-color: rgb(60, 171, 60);
+    color: white;
+}
+.card-title{
+    font-family: "Poetsen One", sans-serif;
+    font-size: 15px;
+    color: rgb(94, 111, 209);
+}
+.titulos{
+    font-family: "Poetsen One", sans-serif;
+    font-size: 15px;
+    color: rgb(94, 111, 209);
+}
+.btnSiguiente{
+    background-color: #80807f;
+    margin-left: 5px;
+    color: white;
+}
+.btnAtras{
+    background-color: #80807f;
+    margin-right: 5px;
+    color: white;
+}
+.btn-secondary[disabled] {
+    background-color: rgb(201, 123, 123);
+    border-color: #6c757d;
+    color: white;
+}
+.botoneraPaginacion{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+td{
+    padding-right: 20px;
+}
+th{
+    padding-bottom: 10px;
+    text-align: left;
 }
