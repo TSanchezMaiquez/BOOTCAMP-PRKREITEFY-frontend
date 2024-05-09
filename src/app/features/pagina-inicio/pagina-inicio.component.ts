@@ -99,77 +99,91 @@ export class PaginaInicioComponent implements OnInit{
   private obtenerReproducciones(): void{
     this.reproduccionCancionservice.obtenerReproducciones(this.username!).subscribe({
       next: (reproduccionCancion) => {this.cancionesReproducidas = reproduccionCancion 
-        this.ordenarCancionesPorReproduccionDeUsuario();
+        this.obtenerEstilosMasReproducidosPorUsuario()
       },
       error: (error) => {this.handleError(error);}
     })
   }
-private ordenarCancionesPorReproduccionDeUsuario(): void {
+// private ordenarCancionesPorReproduccionDeUsuario(): void {
 
-  if(this.cancionesReproducidas.length>0){
-    this.cancionesReproducidas.sort((a, b) => b.reproducciones - a.reproducciones);
-  }
-  this.obtenerEstilosMasReproducidosPorUsuario()
-}
+//   if(this.cancionesReproducidas.length>0){
+//     this.cancionesReproducidas.sort((a, b) => b.reproducciones - a.reproducciones);
+//   }
+//   this.obtenerEstilosMasReproducidosPorUsuario()
+// }
 
 private obtenerEstilosMasReproducidosPorUsuario(): void{
-  let estilos = [];
-  estilos.push(this.cancionesReproducidas[0].estilo)
+
+let rock:number = 0;
+let pop: number =0;
+let clasica: number = 0;
+
+
+
   for(let i=1; i <this.cancionesReproducidas.length; i++){
-    if(this.cancionesReproducidas[i].estilo !== estilos[0]){
-      estilos.push(this.cancionesReproducidas[i].estilo);
-      
+    if(this.cancionesReproducidas[i].estilo==="POP"){
+      pop++;
+    }else if(this.cancionesReproducidas[i].estilo==="ROCK"){
+      rock++;
+    }else{
+      clasica++;
     }
-    if(estilos.length===2){
-      break;
-    }
+  
   }
-  this.obtenerCancionesPorReproduccionTotalYEstilo(estilos);
+  let estiloMenosEscuchado: string;
+  let menorValor: number = Math.min(rock, pop, clasica);
+
+  if (menorValor === rock) {
+      estiloMenosEscuchado = "ROCK";
+  } else if (menorValor === pop) {
+      estiloMenosEscuchado = "POP";
+  } else {
+      estiloMenosEscuchado = "CLASICA";
+  }
+  this.obtenerCancionesPorReproduccionTotalEstrellasYEstilo(estiloMenosEscuchado);
 }
 
-private obtenerCancionesPorReproduccionTotalYEstilo(estilos: string[]): void{
-
-  const numeroDeCancionesDelPrimerEstilo: number = 3;
-  //let cancionesDelPrimerEstilo: Cancion[] = [];
-  const filtroEstiloMasEscuchado: string = "estilo:MATCH:"+ estilos[0];
-
-  this.obtenerCancionesEstiloMasEscuchado(filtroEstiloMasEscuchado, numeroDeCancionesDelPrimerEstilo);
-  const numeroDeCancionesDelSegundoEstilo: number = 2;
-  const filtroSegundoEstiloMasEscuchado: string = "estilo:MATCH:"+ estilos[1];
-
-  this.obtenerCancionesSegundoEstiloMasEscuchado(filtroSegundoEstiloMasEscuchado, numeroDeCancionesDelSegundoEstilo);
- 
-}
-private obtenerCancionesEstiloMasEscuchado(estiloMasEscuchado: string, numeroDeCancionesARecuperar: number): void{
+private obtenerCancionesPorReproduccionTotalEstrellasYEstilo(estilos: string){
 
   const sort: string = 'reproducciones,desc';
-  this.cancionService.obtenerCanciones(this.page, numeroDeCancionesARecuperar, sort, estiloMasEscuchado).subscribe({
+  let filtros = this.filtroSeccionParaTi(estilos);
+  const numeroDeCancionesARecuperar: number=5;
+
+  this.cancionService.obtenerCanciones(this.page, numeroDeCancionesARecuperar, sort, filtros).subscribe({
     next: (data: any) => {
       
       this.cancionesDelPrimerEstilo = data.content;
-    console.log(this.cancionesDelPrimerEstilo.length+ "!!!!!!!!!!!!!!!!!!!!")
    
   },
     error: (error) => {
       this.handleError(error);
     }
   });
-}
-private obtenerCancionesSegundoEstiloMasEscuchado(estiloMasEscuchado: string, numeroDeCancionesARecuperar: number): void{
 
-  const sort: string = 'reproducciones,desc';
-  this.cancionService.obtenerCanciones(this.page, numeroDeCancionesARecuperar, sort, estiloMasEscuchado).subscribe({
-    next: (data: any) => {
-      
-      this.cancionesDelSegundoEstilo = data.content;
-    console.log(this.cancionesDelSegundoEstilo.length+ "!!!!!!!!!!!!!!!!!!!!")
-   
-  },
-    error: (error) => {
-      this.handleError(error);
-    }
-  });
+
 }
+private filtroSeccionParaTi(estilo: string): string | undefined {
+  let filters: string[] = [];
+  const valoracion: number =3;
+
+  const filtroValoracion:string = "valoracion:GREATER_THAN:" + valoracion;
+  const filtroEstilos: string = "estilo:NOT_EQUAL:"+estilo ;
+
+  filters.push(filtroEstilos);
+  filters.push(filtroValoracion)
+
+  if (filters.length > 0) {
+    return filters.join(',');
+  } else {
+    return undefined;
+  }
+}
+
+
+
+
+
+
   private handleError(err: any){
     console.log(err);
   }

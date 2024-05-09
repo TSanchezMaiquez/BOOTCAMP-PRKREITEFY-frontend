@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReproduccionCancion } from 'src/app/entities/reproduccionCancion/model/reproduccionCancion.model';
 import { ReproduccionCancionService } from 'src/app/entities/reproduccionCancion/service/reproduccion-cancion.service';
 import { Usuario } from 'src/app/entities/usuario/model/usuario.model';
 import { UsuarioService } from 'src/app/entities/usuario/service/usuario.service';
+
+
+
+
+
+
 
 @Component({
   selector: 'app-perfil-form',
@@ -17,10 +23,12 @@ export class PerfilFormComponent implements OnInit{
   cancionesReproducidas: ReproduccionCancion[] = [];
   password: string = "";
   passwordRepetido: string = "";
+ 
 
   constructor(private route: ActivatedRoute,
     private usuarioService: UsuarioService,
-    private reproduccionCancionservice: ReproduccionCancionService
+    private reproduccionCancionservice: ReproduccionCancionService,
+    private router: Router
   ){}
 
   
@@ -46,16 +54,12 @@ export class PerfilFormComponent implements OnInit{
   private obtenerReproducciones(): void{
     this.reproduccionCancionservice.obtenerReproducciones(this.username!).subscribe({
       next: (reproduccionCancion) => {this.cancionesReproducidas = reproduccionCancion 
-     
       },
       error: (error) => {this.handleError(error);}
     })
   }
 public modificar():void{
-
   if(this.password && this.passwordRepetido && this.password !== this.passwordRepetido){
-    console.log("Las contraseñas no coinciden");
-  
   }else {
     if(this.password && this.passwordRepetido && this.password===this.passwordRepetido){
       this.usuario!.password = this.password;
@@ -65,13 +69,12 @@ public modificar():void{
         this.password = ""
         this.passwordRepetido = ""
       },
-      error: (error) => {this.handleError(error);}
+      error: (error) => {this.handleError(error);
+      }
     })
   }
 
 }
-
-
 
   private handleError(err: any){
     console.log(err);
