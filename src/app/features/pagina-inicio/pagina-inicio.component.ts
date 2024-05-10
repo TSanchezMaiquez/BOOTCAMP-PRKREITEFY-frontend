@@ -80,6 +80,8 @@ export class PaginaInicioComponent implements OnInit{
     });
     this.obtenerCancionesConMasReproducciones();
   }
+
+
 //Seccion más escuchadas
   private obtenerCancionesConMasReproducciones():void {
     const sort: string = 'reproducciones,desc';
@@ -142,15 +144,20 @@ private obtenerCancionesPorReproduccionTotalEstrellas(estilos: string[]){
 
 }
 private cancionesSeccionParaTi(estilos:string[]){
-
-  for (let i = 0; i < this.cancionesPorValoracionYReproduccion.length; i++) {
-    if(this.cancionesPorValoracionYReproduccion[i].estilo===estilos[0] || this.cancionesPorValoracionYReproduccion[i].estilo===estilos[1]){
-      this.cancionesSecParaTi.push(this.cancionesPorValoracionYReproduccion[i]);
-    }
-    if(this.cancionesSecParaTi.length===5){
-      break;
-    }
-}
+  if(estilos.length===0){
+    this.cancionesSecParaTi = this.cancionesPorValoracionYReproduccion.slice(0, 5);
+  }
+  else{
+    for (let i = 0; i < this.cancionesPorValoracionYReproduccion.length; i++) {
+      if(this.cancionesPorValoracionYReproduccion[i].estilo===estilos[0] || this.cancionesPorValoracionYReproduccion[i].estilo===estilos[1]){
+        this.cancionesSecParaTi.push(this.cancionesPorValoracionYReproduccion[i]);
+      }
+      if(this.cancionesSecParaTi.length===5){
+        break;
+      }
+  }
+  }
+  
 }
   private handleError(err: any){
     console.log(err);
