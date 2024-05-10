@@ -24,7 +24,8 @@ export class PaginaInicioComponent implements OnInit{
   cancionesDelPrimerEstilo: Cancion[] = [];
   cancionesDelSegundoEstilo: Cancion[] = [];
   cancionesMasEscuchadas: Cancion[] =[];
- 
+  cancionesPorValoracionYReproduccion: Cancion[] =[];
+  cancionesSecParaTi: Cancion[] =[];
 
   estiloCancion?: string;
 
@@ -109,43 +110,30 @@ export class PaginaInicioComponent implements OnInit{
 
 private obtenerEstilosMasReproducidosPorUsuario(): void{
 
-  let rock:number = 0;
-  let pop: number =0;
-  let clasica: number = 0;
- 
-  for(let i=1; i <this.cancionesReproducidas.length; i++){
-    if(this.cancionesReproducidas[i].estilo==="POP"){
-      pop++;
-    }else if(this.cancionesReproducidas[i].estilo==="ROCK"){
-      rock++;
-    }else{
-      clasica++;
+  const reproduccionesPorEstilo: { [key: string]: number } = {};
+  for (const cancion of this.cancionesReproducidas) {
+    const estilo = cancion.estilo;
+    if (reproduccionesPorEstilo.hasOwnProperty(estilo)) {
+      reproduccionesPorEstilo[estilo]++;
+    } else {
+      reproduccionesPorEstilo[estilo] = 1;
     }
   }
-  let estiloMenosEscuchado: string;
-  let menorValor: number = Math.min(rock, pop, clasica);
-
-  if (menorValor === rock) {
-      estiloMenosEscuchado = "ROCK";
-  } else if (menorValor === pop) {
-      estiloMenosEscuchado = "POP";
-  } else {
-      estiloMenosEscuchado = "CLASICA";
-  }
-  this.obtenerCancionesPorReproduccionTotalEstrellasYEstilo(estiloMenosEscuchado);
+  const estilosMasEscuchados: string[] = Object.keys(reproduccionesPorEstilo);
+  this.obtenerCancionesPorReproduccionTotalEstrellas(estilosMasEscuchados)
 }
-
-private obtenerCancionesPorReproduccionTotalEstrellasYEstilo(estilos: string){
+private obtenerCancionesPorReproduccionTotalEstrellas(estilos: string[]){
 
   const sort: string = 'reproducciones,desc';
-  let filtros = this.filtroSeccionParaTi(estilos);
-  const numeroDeCancionesARecuperar: number=5;
+  const valoracion: number =3;
 
-  this.cancionService.obtenerCanciones(this.page, numeroDeCancionesARecuperar, sort, filtros).subscribe({
+  const filtroValoracion:string = "valoracion:GREATER_THAN:" + valoracion;
+  const numeroDeCancionesARecuperar: number=20;
+
+  this.cancionService.obtenerCanciones(this.page, numeroDeCancionesARecuperar, sort, filtroValoracion).subscribe({
     next: (data: any) => {
-      
-      this.cancionesDelPrimerEstilo = data.content;
-   
+      this.cancionesPorValoracionYReproduccion = data.content;
+      this.cancionesSeccionParaTi(estilos);
   },
     error: (error) => {
       this.handleError(error);
@@ -153,28 +141,17 @@ private obtenerCancionesPorReproduccionTotalEstrellasYEstilo(estilos: string){
   });
 
 }
-private filtroSeccionParaTi(estilo: string): string | undefined {
-  let filters: string[] = [];
-  const valoracion: number =3;
+private cancionesSeccionParaTi(estilos:string[]){
 
-  const filtroValoracion:string = "valoracion:GREATER_THAN:" + valoracion;
-  const filtroEstilos: string = "estilo:NOT_EQUAL:"+estilo ;
-
-  filters.push(filtroEstilos);
-  filters.push(filtroValoracion)
-
-  if (filters.length > 0) {
-    return filters.join(',');
-  } else {
-    return undefined;
-  }
+  for (let i = 0; i < this.cancionesPorValoracionYReproduccion.length; i++) {
+    if(this.cancionesPorValoracionYReproduccion[i].estilo===estilos[0] || this.cancionesPorValoracionYReproduccion[i].estilo===estilos[1]){
+      this.cancionesSecParaTi.push(this.cancionesPorValoracionYReproduccion[i]);
+    }
+    if(this.cancionesSecParaTi.length===5){
+      break;
+    }
 }
-
-
-
-
-
-
+}
   private handleError(err: any){
     console.log(err);
   }

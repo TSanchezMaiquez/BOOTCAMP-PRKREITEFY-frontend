@@ -42,4 +42,11 @@ export class CancionService{
     return this.http.get<Cancion>(urlEndpoint, { headers: this.headers });
 
   }
+  public actualizarCancion(cancion: Cancion): Observable<Cancion>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+    });
+    return this.http.patch<Cancion>(`${this.baseUrl}/canciones/`+ cancion.id, cancion, { headers: headers });
+
+  }
 }

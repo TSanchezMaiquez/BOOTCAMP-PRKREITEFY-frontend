@@ -42,16 +42,8 @@
 </div>
 
 <h1>Para ti</h1>
-<div class="paraTi" *ngIf="cancionesDelPrimerEstilo.length > 0 || cancionesDelSegundoEstilo.length > 0">
-  <div *ngFor="let cancion of cancionesDelPrimerEstilo" class="cancion">
-    <a>
-      <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción" [routerLink]="['/cancion', cancion.id, username]">
-    </a>
-    <p class="nombreCancion">{{cancion.nombre}}</p>
-    <p class="nombreArtista">{{cancion.artistaNombre}}</p>
-  </div>
-
-  <div *ngFor="let cancion of cancionesDelSegundoEstilo" class="cancion">
+<div class="paraTi" *ngIf="cancionesSecParaTi.length > 0">
+  <div *ngFor="let cancion of cancionesSecParaTi" class="cancion">
     <a>
       <img class="imgItem" [src]="'data:image/jpeg;base64,' + cancion.albumImagen" alt="Nombre de la canción" [routerLink]="['/cancion', cancion.id, username]">
     </a>

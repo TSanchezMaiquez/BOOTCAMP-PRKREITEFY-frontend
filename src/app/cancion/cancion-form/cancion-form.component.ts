@@ -72,11 +72,20 @@ export class CancionFormComponent {
     next: (reproduccionCancion) => {this.reproduccionesCanciones = reproduccionCancion
       console.log("holaaaaa")
      this.obtenerReproducciones();
+     this.anadeReproduccionDeUsuarioAReproduccionTotal();
     },
     error: (error) => {this.handleError(error);}
    })
   }
+  private anadeReproduccionDeUsuarioAReproduccionTotal(){
+    this.cancion!.reproducciones +=1;
+    this.cancionService.actualizarCancion(this.cancion!).subscribe({
+      next: (cancion) => {this.cancion = cancion
 
+      },
+      error: (error) => {this.handleError(error);}
+    })
+  }
   private obtenerValoraciones(): void{
     this.valoracionCancionService.obtenerValoraciones(this.username!).subscribe({
       next: (valoracionCancion) => {this.valoracionesCanciones = valoracionCancion
