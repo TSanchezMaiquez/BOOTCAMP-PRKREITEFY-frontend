@@ -17,7 +17,6 @@ export class RegisterComponent {
     private router: Router) { }
 
   register(): void {
-  console.log("registro: ", this.user);
     this.authService.register(this.user).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);

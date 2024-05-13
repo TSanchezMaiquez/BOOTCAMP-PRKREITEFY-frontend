@@ -16,7 +16,7 @@
     <div *ngIf="errorMessage" class="alert alert-danger">
       {{ errorMessage }}
     </div>
-    <button class="login" [routerLink]="['/inicio',credentials.username]">Login</button>
+    <button class="login" (click)="login()" >Login</button>
     <div class="register-link">
       <p>¿No tienes una cuenta? <a routerLink="/register">Regístrate</a></p>
   </div>

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CancionService } from '../../entities/cancion/service/cancion.service';
 import { Cancion } from '../../entities/cancion/model/cancion.model';
 import { ValoracionCancionService } from '../../entities/valoracionCancion/service/valoracion-cancion.service';
 import { ValoracionCancion } from '../../entities/valoracionCancion/model/valoracionCancion.model';
 import { ReproduccionCancion } from '../../entities/reproduccionCancion/model/reproduccionCancion.model';
 import { ReproduccionCancionService } from 'src/app/entities/reproduccionCancion/service/reproduccion-cancion.service';
+import { UsuarioService } from 'src/app/entities/usuario/service/usuario.service';
 
 @Component({
   selector: 'app-cancion-form',
@@ -20,14 +21,16 @@ export class CancionFormComponent {
   valoracionesCanciones: ValoracionCancion[] = [];
   valoracion?: number;
   reproduccionesCanciones: ReproduccionCancion[] = [];
-  reproducciones=0;
+  reproduccionesDeUsuario=0;
   
  
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private router: Router, 
+    private route: ActivatedRoute, 
     private cancionService: CancionService, 
     private valoracionCancionService: ValoracionCancionService, 
-    private reproduccionCancionservice: ReproduccionCancionService
+    private reproduccionCancionservice: ReproduccionCancionService, 
+    private usuarioService: UsuarioService
   ){}
 
 
@@ -42,10 +45,24 @@ export class CancionFormComponent {
     const username = this.route.snapshot.paramMap.get('username');
     if (username) {
       this.username = username;
+      this.comprobarUsuario();
       this.obtenerValoraciones();
       this.obtenerReproducciones();
  
     }  
+  }
+  private comprobarUsuario(): void {
+    this.usuarioService.comprobarUsuario().subscribe({
+      next: (usuario: any) => {
+        if (usuario.nombreDeUsuario !== this.username) {
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (error) => {
+        console.error('Error al comprobar usuario:', error);
+        this.router.navigate(['/login']);
+      }
+    });
   }
   private obtenerCancionPorId():void{
     this.cancionService.obtenerCancionPorId(this.cancionId!).subscribe({
@@ -64,28 +81,6 @@ export class CancionFormComponent {
     error: (error) => {this.handleError(error);}
    })
   }
-  public reproducir(): void {
-    const reproduccionCancion= new ReproduccionCancion(this.username!, this.cancionId!, this.cancion?.nombre!,(this.reproducciones+1),new Date(), this.cancion?.estilo! );
-    console.log("holaaaaa1")
-   
-    this.reproduccionCancionservice.anadirReproduccionACancion(this.username!, reproduccionCancion).subscribe({
-    next: (reproduccionCancion) => {this.reproduccionesCanciones = reproduccionCancion
-      console.log("holaaaaa")
-     this.obtenerReproducciones();
-     this.anadeReproduccionDeUsuarioAReproduccionTotal();
-    },
-    error: (error) => {this.handleError(error);}
-   })
-  }
-  private anadeReproduccionDeUsuarioAReproduccionTotal(){
-    this.cancion!.reproducciones +=1;
-    this.cancionService.actualizarCancion(this.cancion!).subscribe({
-      next: (cancion) => {this.cancion = cancion
-
-      },
-      error: (error) => {this.handleError(error);}
-    })
-  }
   private obtenerValoraciones(): void{
     this.valoracionCancionService.obtenerValoraciones(this.username!).subscribe({
       next: (valoracionCancion) => {this.valoracionesCanciones = valoracionCancion
@@ -102,7 +97,7 @@ export class CancionFormComponent {
             this.valoracion = valoracionCancion.valoracion;
             break; 
         }
-    }
+      }
     }
   }
   private obtenerReproducciones(): void{
@@ -115,16 +110,33 @@ export class CancionFormComponent {
     })
   }
   private reproduccionesDeCancionSeleccionada(){
-    let reproduccionesDeCancion=0;
-    if(this.reproduccionesCanciones.length>0){
-      for (let i = 0; i < this.reproduccionesCanciones.length; i++) {
-        const reproduccionCancion = this.reproduccionesCanciones[i];
-        if (reproduccionCancion.usuarioId === this.username && reproduccionCancion.cancionId === this.cancionId) {
-         reproduccionesDeCancion++;
-        }
+    if (this.reproduccionesCanciones.length > 0) {
+      const reproduccionesDeCancion = this.reproduccionesCanciones
+        .filter(reproduccion => reproduccion.cancionId === this.cancionId)
+        .reduce((totalReproducciones) => totalReproducciones + 1, 0);
+      
+      this.reproduccionesDeUsuario = reproduccionesDeCancion;
+    } else {
+      this.reproduccionesDeUsuario = 0;
     }
-    this.reproducciones = reproduccionesDeCancion;
-    }
+  }
+  public reproducir(): void {
+    const reproduccionCancion= new ReproduccionCancion(this.username!, this.cancionId!, this.cancion?.nombre!,(this.reproduccionesDeUsuario+1),new Date(), this.cancion?.estilo! );
+   
+    this.reproduccionCancionservice.anadirReproduccionACancion(this.username!, reproduccionCancion).subscribe({
+    next: (reproduccionCancion) => {this.reproduccionesCanciones = reproduccionCancion
+     this.reproduccionesDeCancionSeleccionada();
+     this.anadeReproduccionDeUsuarioAReproduccionTotal();
+    },
+    error: (error) => {this.handleError(error);}
+   })
+  }
+  private anadeReproduccionDeUsuarioAReproduccionTotal(){
+    this.cancion!.reproducciones +=1;
+    this.cancionService.actualizarCancion(this.cancion!).subscribe({
+      next: (cancion) => {this.cancion = cancion},
+      error: (error) => {this.handleError(error);}
+    })
   }
   private handleError(err: any):void{
     console.log(err);

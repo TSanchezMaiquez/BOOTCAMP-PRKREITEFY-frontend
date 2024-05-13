@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CancionService } from 'src/app/entities/cancion/service/cancion.service';
 import { ReproduccionCancion } from 'src/app/entities/reproduccionCancion/model/reproduccionCancion.model';
 import { ReproduccionCancionService } from 'src/app/entities/reproduccionCancion/service/reproduccion-cancion.service';
 import { Usuario } from 'src/app/entities/usuario/model/usuario.model';
@@ -34,6 +35,7 @@ export class PerfilFormComponent implements OnInit{
   constructor(private route: ActivatedRoute,
     private usuarioService: UsuarioService,
     private reproduccionCancionservice: ReproduccionCancionService,
+    private cancionService: CancionService, 
     private router: Router
   ){}
 
@@ -44,9 +46,23 @@ export class PerfilFormComponent implements OnInit{
     const username = this.route.snapshot.paramMap.get('username');
     if (username) {
       this.username = username;
+      this.comprobarUsuario();
       this.obtenerUsuario();
       this.obtenerReproducciones();
     }  
+  }
+  private comprobarUsuario(): void {
+    this.usuarioService.comprobarUsuario().subscribe({
+      next: (usuario: any) => {
+        if (usuario.nombreDeUsuario !== this.username) {
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (error) => {
+        console.error('Error al comprobar usuario:', error);
+        this.router.navigate(['/login']);
+      }
+    });
   }
   private obtenerUsuario(): void {
    

@@ -19,6 +19,7 @@ export class PaginaInicioComponent implements OnInit{
   canciones: Cancion[] = [];
   ultimasCancionesAnadidas: Cancion[] = [];
   username?: string;
+  usuarioRecibido?: string;
   usuario?: Usuario;
   cancionesReproducidas: ReproduccionCancion[] = [];
   cancionesDelPrimerEstilo: Cancion[] = [];
@@ -44,10 +45,27 @@ export class PaginaInicioComponent implements OnInit{
     const username = this.route.snapshot.paramMap.get('username');
     if (username) {
       this.username = username;
+      this.comprobarUsuario();
+
+     
+ 
     }
     this.obtenerUsuario();
    this.obtenerReproducciones();
    
+  }
+  private comprobarUsuario(): void {
+    this.usuarioService.comprobarUsuario().subscribe({
+      next: (usuario: any) => {
+        if (usuario.nombreDeUsuario !== this.username) {
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (error) => {
+        console.error('Error al comprobar usuario:', error);
+        this.router.navigate(['/login']);
+      }
+    });
   }
   private obtenerUsuario(): void {
    
@@ -74,13 +92,13 @@ export class PaginaInicioComponent implements OnInit{
     const sort: string = 'fechaInsercion,desc';
     this.cancionService.obtenerCanciones(this.page, this.size, sort, filtro).subscribe({
       next: (data: any) => {
-        this.ultimasCancionesAnadidas = data.content;},
+        this.ultimasCancionesAnadidas = data.content;
+        this.obtenerCancionesConMasReproducciones();
+      },
       error: (error) => {this.handleError(error);}
       
     });
-    this.obtenerCancionesConMasReproducciones();
   }
-
 
 //Seccion más escuchadas
   private obtenerCancionesConMasReproducciones():void {
@@ -98,7 +116,6 @@ export class PaginaInicioComponent implements OnInit{
   
   }
  
-
   //Seccion para ti
   private obtenerReproducciones(): void{
     this.reproduccionCancionservice.obtenerReproducciones(this.username!).subscribe({
@@ -108,7 +125,6 @@ export class PaginaInicioComponent implements OnInit{
       error: (error) => {this.handleError(error);}
     })
   }
-
 
 private obtenerEstilosMasReproducidosPorUsuario(): void{
 
@@ -157,7 +173,6 @@ private cancionesSeccionParaTi(estilos:string[]){
       }
   }
   }
-  
 }
   private handleError(err: any){
     console.log(err);
